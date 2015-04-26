@@ -119,7 +119,8 @@ public func dominantColorsInImage(
         maxSampledPixels: Int = DefaultParameterValues.maxSampledPixels,
         accuracy: GroupingAccuracy = DefaultParameterValues.accuracy,
         seed: UInt32 = DefaultParameterValues.seed,
-        memoizeConversions: Bool = DefaultParameterValues.memoizeConversions
+        memoizeConversions: Bool = DefaultParameterValues.memoizeConversions,
+        kTarget: Int = 0
     ) -> [CGColor] {
     
     let (width, height) = (CGImageGetWidth(image), CGImageGetHeight(image))
@@ -145,8 +146,9 @@ public func dominantColorsInImage(
             labValues.append(RGBToLAB(pixel))
         }
     }
+        
     // Cluster the colors using the k-means algorithm
-    let k = selectKForElements(labValues)
+    let k = kTarget > 0 ? kTarget : selectKForElements(labValues);
     var clusters = kmeans(labValues, k, seed, distanceForAccuracy(accuracy))
     
     // Sort the clusters by size in descending order so that the

@@ -72,9 +72,10 @@ public extension UIImage {
         maxSampledPixels: Int = DefaultParameterValues.maxSampledPixels,
         accuracy: GroupingAccuracy = DefaultParameterValues.accuracy,
         seed: UInt32 = DefaultParameterValues.seed,
-        memoizeConversions: Bool = DefaultParameterValues.memoizeConversions
+        memoizeConversions: Bool = DefaultParameterValues.memoizeConversions,
+        k: Int = 0
     ) -> [UIColor] {
-        let colors = dominantColorsInImage(self.CGImage, maxSampledPixels: maxSampledPixels, accuracy: accuracy, seed: seed, memoizeConversions: memoizeConversions)
+        let colors = dominantColorsInImage(self.CGImage, maxSampledPixels: maxSampledPixels, accuracy: accuracy, seed: seed, memoizeConversions: memoizeConversions, kTarget: k)
         return colors.map { UIColor(CGColor: $0)! }
     }
 }
